@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Theater Bookmarks</title>
+  <title>TESLA Start</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="icon" href="assets/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <style>
-    :root { color-scheme: dark; --line:#29292c; --panel:#171719; --text:#f4f4f4; --muted:#8f8f95; }
+    :root { color-scheme: dark; --line:#29292c; --panel:#171719; --text:#f4f4f4; --muted:#8f8f95; --tile-w:338px; --tile-gap:21px; }
     * { box-sizing: border-box; }
-    body { margin:0; min-height:100vh; overflow:hidden; background:#09090a; color:var(--text); font-family:Arial,Helvetica,sans-serif; }
-    .screen { width:100vw; height:100vh; background:radial-gradient(ellipse at 50% -20%,#242427,#101011 51%,#09090a); overflow:hidden; }
+    body { margin:0; min-height:100vh; overflow-x:hidden; overflow-y:auto; background:#09090a; color:var(--text); font-family:Arial,Helvetica,sans-serif; }
+    .screen { width:100%; min-height:100vh; background:radial-gradient(ellipse at 50% -20%,#242427,#101011 51%,#09090a); }
     .side,.status,.dock { display:none; }
     .brand { letter-spacing:7px; font-size:11px; color:#bbb; margin-bottom:11px; }
     .side h1 { font-weight:400; font-size:24px; letter-spacing:2px; margin:0; }
@@ -22,59 +25,66 @@
     .title { display:flex; align-items:center; justify-content:center; gap:19px; margin:0; font-weight:400; }
     .title span { font-size:clamp(27px,3.1vw,43px); letter-spacing:8px; font-weight:300; }
     .tesla { width:176px; height:31px; object-fit:contain; filter:brightness(0) invert(1); }
-    .grid { width:min(1280px,100%); margin:0 auto; display:grid; grid-template-columns:repeat(5,1fr); grid-auto-rows:clamp(114px,16.5vh,172px); gap:14px; }
-    .tile { min-height:0; height:100%; padding:16px; border:1px solid #323237; text-decoration:none; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:15px; font-weight:700; font-size:20px; transition:transform .15s,filter .15s,border-color .15s; }
+
+    .grid { width:min(calc(4 * var(--tile-w) + 3 * var(--tile-gap)),100%); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,var(--tile-w)); justify-content:center; gap:var(--tile-gap); }
+    .tile { width:var(--tile-w); aspect-ratio:16/9; padding:0; overflow:hidden; border:1px solid #323237; border-radius:4px; text-decoration:none; color:white; display:block; transition:transform .15s,filter .15s,border-color .15s; }
     .tile:hover,.tile:focus-visible { transform:scale(1.035); filter:brightness(1.2); border-color:#ddd; outline:none; z-index:1; }
     .tile.is-holding { transform:scale(1.06); border-color:#fff; box-shadow:0 0 0 2px #ffffff2c,0 13px 30px #0008; opacity:.78; z-index:3; }
     .rearrange-mode .tile { animation:tilt .18s ease-in-out infinite alternate; cursor:grabbing; }
     .rearrange-mode .tile.is-holding { animation:none; }
     @keyframes tilt { from { transform:rotate(-.4deg); } to { transform:rotate(.4deg); } }
-    .netflix { background:#090909; }.youtube { background:#141415; }.apple { background:#000; }.prime { background:#1177ef; }.hbo { background:#171021; }.sky { background:linear-gradient(100deg,#4c32c5,#c20e69); }.npo { background:#0d294d; }.videoland { background:#ff3446; }.stremio { background:#0b0b0c; }.chargemap { background:#102b2e; }.nrc { background:#fff; color:#141414; }.homey { background:#171719; }.x { background:#050505; }.readwise { background:#20201e; }.web { background:#202022; }
-    .logo { width:auto; max-width:72%; height:48px; max-height:48px; display:block; object-fit:contain; }
-    .logo.word-logo { max-width:80%; height:56px; max-height:56px; }
-    .logo.site-icon { width:52px; height:52px; }
-    .tile.has-art { padding:0; overflow:hidden; }
-    .tile-art { width:100%; height:100%; object-fit:contain; display:block; }
-    .apple .tile-art { transform:scale(1.15); }
-    .prime .tile-art { transform:scale(.5); }
-    .sky .tile-art { transform:scale(1.2); }
-    .npo .tile-art { transform:scale(.75); }
-    .videoland .tile-art { transform:scale(1.25); }
-    .stremio .tile-art { transform:scale(1.05); }
-    .nrc .tile-art { transform:scale(1.4); }
-    .logo.invert { filter:brightness(0) invert(1); }
-    .wordmark { font-size:clamp(19px,1.7vw,27px); font-weight:800; letter-spacing:-1px; text-align:center; line-height:1; }
-    .prime-logo { color:#00a8e1; letter-spacing:-1.5px; }.prime-logo small { display:block; font-size:.52em; letter-spacing:3px; margin-top:5px; }.sky-logo { letter-spacing:-1.7px; }.sky-logo b { color:#ff4e96; }.npo-logo { border:2px solid #fff; padding:5px 8px 4px; font-size:21px; letter-spacing:-1px; }.npo-logo small { font-size:13px; margin-left:3px; }.videoland-logo { text-transform:lowercase; letter-spacing:-2px; font-size:29px; }.chargemap-logo { color:#55d2ce; letter-spacing:-1px; }.homey-logo { letter-spacing:-2px; font-size:30px; }.readwise-logo { color:#ffcf57; letter-spacing:-1.5px; }.readwise-logo:before { content:"◈"; margin-right:7px; font-size:.8em; }
-    @media (max-width:700px) { body{overflow:auto}.content{padding:36px 20px}.grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:124px;gap:10px}.title{gap:13px}.title span{font-size:23px;letter-spacing:5px}.tesla{width:122px}.tile{gap:13px}.logo{height:40px} }
+
+    .tile-art { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+    .tile-art.zoom-120 { transform:scale(1.2); }
+
+    .fullscreen-btn { position:fixed; bottom:22px; left:26px; height:54px; display:flex; align-items:center; gap:9px; padding:0 18px 0 15px; border-radius:12px; background:var(--panel); border:1px solid var(--line); color:var(--muted); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:transform .15s,filter .15s,border-color .15s,color .15s; z-index:5; }
+    .fullscreen-btn:hover,.fullscreen-btn:focus-visible { color:#fff; border-color:#ddd; transform:scale(1.045); outline:none; }
+    .fullscreen-btn svg { width:18px; height:18px; flex:none; }
+
+    @media (max-width:700px) { .content{padding:36px 20px}:root{--tile-w:280px;--tile-gap:15px}.title{gap:13px}.title span{font-size:23px;letter-spacing:5px}.tesla{width:122px}.fullscreen-btn{bottom:14px;left:14px;height:48px} }
   </style>
 </head>
 <body>
   <main class="screen">
+    <button class="fullscreen-btn" type="button" id="fullscreenBtn" title="Reopen this page through YouTube to hide the Tesla browser bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+      Fullscreen
+    </button>
     <section class="main">
       <div class="content">
         <div class="title-wrap">
           <h2 class="title"><img class="tesla" src="https://upload.wikimedia.org/wikipedia/commons/6/62/Tesla_Motors_Logo.svg" alt="Tesla" /><span>START</span></h2>
         </div>
         <nav class="grid" aria-label="Website bookmarks">
-          <a class="tile netflix" href="https://www.netflix.com" target="_blank" rel="noopener"><img class="logo" src="https://cdn.simpleicons.org/netflix/E50914" alt="Netflix logo" /></a>
-          <a class="tile youtube" href="https://www.youtube.com" target="_blank" rel="noopener"><img class="logo" src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube logo" /></a>
-          <a class="tile apple has-art" href="https://tv.apple.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/apple-tv.jpg" alt="Apple TV Plus logo" /></a>
-          <a class="tile prime has-art" href="https://www.primevideo.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/prime-video.png" alt="Amazon Prime Video logo" /></a>
-          <a class="tile hbo" href="https://www.max.com" target="_blank" rel="noopener"><img class="logo" src="https://cdn.simpleicons.org/hbomax/ffffff" alt="HBO Max logo" /></a>
-          <a class="tile sky has-art" href="https://www.skyshowtime.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/skyshowtime.png" alt="SkyShowtime logo" /></a>
-          <a class="tile npo has-art" href="https://npo.nl/start" target="_blank" rel="noopener"><img class="tile-art" src="assets/npo-start.jpg" alt="NPO Start logo" /></a>
-          <a class="tile videoland has-art" href="https://www.videoland.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/videoland.jpg" alt="Videoland logo" /></a>
-          <a class="tile stremio has-art" href="https://www.stremio.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/stremio.png" alt="Stremio logo" /></a>
-          <a class="tile chargemap" href="https://chargemap.com" target="_blank" rel="noopener"><img class="logo site-icon" src="https://www.google.com/s2/favicons?domain=chargemap.com&amp;sz=128" alt="Chargemap logo" /></a>
-          <a class="tile nrc has-art" href="https://www.nrc.nl" target="_blank" rel="noopener"><img class="tile-art" src="assets/nrc.png" alt="NRC logo" /></a>
-          <a class="tile homey" href="https://homey.app" target="_blank" rel="noopener"><img class="logo site-icon" src="https://commons.wikimedia.org/wiki/Special:FilePath/Athom_logo.png" alt="Homey logo" /></a>
-          <a class="tile x" href="https://x.com" target="_blank" rel="noopener"><img class="logo invert" src="https://cdn.simpleicons.org/x" alt="X logo" /></a>
-          <a class="tile readwise" href="https://readwise.io" target="_blank" rel="noopener"><img class="logo site-icon" src="https://www.google.com/s2/favicons?domain=readwise.io&amp;sz=128" alt="Readwise logo" /></a>
+          <a class="tile" href="https://www.netflix.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/netflix.jpg" alt="Netflix logo" /></a>
+          <a class="tile" href="https://www.youtube.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/youtube.jpg" alt="YouTube logo" /></a>
+          <a class="tile" href="https://tv.apple.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/appletv.jpg" alt="Apple TV logo" /></a>
+          <a class="tile" href="https://www.videoland.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/videoland.jpg" alt="Videoland logo" /></a>
+          <a class="tile" href="https://www.max.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/hbomax.jpg" alt="HBO Max logo" /></a>
+          <a class="tile" href="https://www.primevideo.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/primevideo.jpg" alt="Amazon Prime Video logo" /></a>
+          <a class="tile" href="https://www.skyshowtime.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/skyshowtime.jpg" alt="SkyShowtime logo" /></a>
+          <a class="tile" href="https://www.disneyplus.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/disneyplus.webp" alt="Disney+ logo" /></a>
+          <a class="tile" href="https://npo.nl/start" target="_blank" rel="noopener"><img class="tile-art" src="assets/npostart.jpg" alt="NPO Start logo" /></a>
+          <a class="tile" href="https://www.kijk.nl" target="_blank" rel="noopener"><img class="tile-art" src="assets/kijk.jpg" alt="KIJK logo" /></a>
+          <a class="tile" href="https://www.stremio.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/stremio.jpg" alt="Stremio logo" /></a>
+          <a class="tile" href="https://tv.kpn.com" target="_blank" rel="noopener"><img class="tile-art zoom-120" src="assets/kpntv.webp" alt="KPN TV+ logo" /></a>
+          <a class="tile" href="https://www.xbox.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/xbox.jpg" alt="Xbox logo" /></a>
+          <a class="tile" href="https://www.buienradar.nl" target="_blank" rel="noopener"><img class="tile-art" src="assets/buienradar.jpg" alt="Buienradar logo" /></a>
+          <a class="tile" href="https://www.windfinder.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/windfinder.jpg" alt="Windfinder logo" /></a>
+          <a class="tile" href="https://chargemap.com" target="_blank" rel="noopener"><img class="tile-art zoom-120" src="assets/chargemap.jpg" alt="Chargemap logo" /></a>
         </nav>
       </div>
     </section>
   </main>
   <script>
+    // Tesla browser has no real fullscreen/chrome-hide mode, but the browser bar
+    // disappears if a page is opened through YouTube's redirect endpoint. This
+    // reopens the current page that way, so this bookmark grid loads chrome-free.
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      const target = encodeURIComponent(window.location.href);
+      window.location.href = 'https://www.youtube.com/redirect?q=' + target;
+    });
+
     const grid = document.querySelector('.grid');
     let heldTile = null;
     let holdTimer = null;
