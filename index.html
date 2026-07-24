@@ -27,14 +27,16 @@
     .tesla { width:176px; height:31px; object-fit:contain; filter:brightness(0) invert(1); }
 
     .grid { width:min(calc(4 * var(--tile-w) + 3 * var(--tile-gap)),100%); margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,var(--tile-w)); justify-content:center; gap:var(--tile-gap); }
-    .tile { width:var(--tile-w); aspect-ratio:16/9; padding:0; overflow:hidden; border:1px solid #323237; border-radius:4px; text-decoration:none; color:white; display:block; transition:transform .15s,filter .15s,border-color .15s; }
+    .tile { width:var(--tile-w); aspect-ratio:16/9; padding:0; overflow:hidden; border:1px solid #323237; border-radius:4px; text-decoration:none; color:white; display:block; position:relative; transition:transform .15s,filter .15s,border-color .15s; }
     .tile:hover,.tile:focus-visible { transform:scale(1.035); filter:brightness(1.2); border-color:#ddd; outline:none; z-index:1; }
     .tile.is-holding { transform:scale(1.06); border-color:#fff; box-shadow:0 0 0 2px #ffffff2c,0 13px 30px #0008; opacity:.78; z-index:3; }
     .rearrange-mode .tile { animation:tilt .18s ease-in-out infinite alternate; cursor:grabbing; }
     .rearrange-mode .tile.is-holding { animation:none; }
     @keyframes tilt { from { transform:rotate(-.4deg); } to { transform:rotate(.4deg); } }
 
+    .tile-art.fit-width-60 { width:60%; height:auto; max-height:80%; object-fit:contain; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); }
     .tile-art { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+    .tile-art.zoom-160 { transform:scale(1.6); }
     .tile-art.zoom-150 { transform:scale(1.5); }
     .tile-art.zoom-140 { transform:scale(1.4); }
     .tile-art.zoom-130 { transform:scale(1.3); }
@@ -43,10 +45,17 @@
     .tile-art.zoom-90 { transform:scale(0.9); }
     .tile-art.zoom-80 { transform:scale(0.8); }
     .tile-art.zoom-70 { transform:scale(0.7); }
+    .tile-art.zoom-75 { transform:scale(.75); }
+    .tile-art.zoom-25 { transform:scale(.25); }
     .tile-art.zoom-120 { transform:scale(1.2); }
     .youtube-tile {
       background: #000;
     }
+    .tile-dark { background:#000; }
+    /* .tile-nrc { background:#000; } */
+    .tile-nrc { background:#fff; }
+    .tile-nrc .tile-art { filter:none; }
+
 
     .fullscreen-btn { position:fixed; bottom:22px; left:26px; height:54px; display:flex; align-items:center; gap:9px; padding:0 18px 0 15px; border-radius:12px; background:var(--panel); border:1px solid var(--line); color:var(--muted); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:transform .15s,filter .15s,border-color .15s,color .15s; z-index:5; }
     .fullscreen-btn:hover,.fullscreen-btn:focus-visible { color:#fff; border-color:#ddd; transform:scale(1.045); outline:none; }
@@ -78,11 +87,11 @@
           <a class="tile" href="https://npo.nl/start" target="_blank" rel="noopener"><img class="tile-art" src="assets/npostart.jpg" alt="NPO Start logo" /></a>
           <a class="tile" href="https://www.kijk.nl" target="_blank" rel="noopener"><img class="tile-art" src="assets/kijk.jpg" alt="KIJK logo" /></a>
           <a class="tile" href="https://web.stremio.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/stremio.jpg" alt="Stremio logo" /></a>
-          <a class="tile" href="https://tv.kpn.com" target="_blank" rel="noopener"><img class="tile-art zoom-150" src="assets/kpntv.webp" alt="KPN TV+ logo" /></a>
+          <a class="tile" href="https://tv.kpn.com" target="_blank" rel="noopener"><img class="tile-art zoom-160" src="assets/kpntv.webp" alt="KPN TV+ logo" /></a>
+          <a class="tile tile-dark" href="https://homey.tv/#favorites" target="_blank" rel="noopener"><img class="tile-art zoom-75" src="assets/homey.jpg" alt="Homey logo" /></a>
           <a class="tile" href="https://www.xbox.com/nl-NL/play/consoles" target="_blank" rel="noopener"><img class="tile-art z" src="assets/xbox.jpg" alt="Xbox logo" /></a>
-          <a class="tile" href="https://www.buienradar.nl" target="_blank" rel="noopener"><img class="tile-art" src="assets/buienradar.jpg" alt="Buienradar logo" /></a>
-          <a class="tile" href="https://www.windfinder.com" target="_blank" rel="noopener"><img class="tile-art" src="assets/windfinder.jpg" alt="Windfinder logo" /></a>
-          <a class="tile" href="https://chargemap.com/nl-nl" target="_blank" rel="noopener"><img class="tile-art zoom-130" src="assets/chargemap.jpg" alt="Chargemap logo" /></a>
+          <a class="tile tile-nrc" href="https://www.nrc.nl/mijn-nrc/leeslijst/" target="_blank" rel="noopener"><img class="tile-art fit-width-60" src="assets/nrc.jpg" alt="NRC logo" /></a>
+          <a class="tile" href="https://www.windy.com/nl" target="_blank" rel="noopener"><img class="tile-art" src="assets/windfinder.jpg" alt="Windfinder logo" /></a>
         </nav>
       </div>
     </section>
