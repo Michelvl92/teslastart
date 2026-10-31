@@ -53,9 +53,8 @@
       background: #000;
     }
     .tile-dark { background:#000; }
-    /* .tile-nrc { background:#000; } */
-    .tile-nrc { background:#fff; }
-    .tile-nrc .tile-art { filter:none; }
+    .tile-nrc { background:#000; }
+    .tile-nrc .tile-art { filter:grayscale(1) invert(1); mix-blend-mode:screen; }
 
 
     .fullscreen-btn { position:fixed; bottom:22px; left:26px; height:54px; display:flex; align-items:center; gap:9px; padding:0 18px 0 15px; border-radius:12px; background:var(--panel); border:1px solid var(--line); color:var(--muted); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; cursor:pointer; transition:transform .15s,filter .15s,border-color .15s,color .15s; z-index:5; }
