@@ -21,7 +21,7 @@
     .location { color:var(--muted); font-size:12px; letter-spacing:.5px; }
     .main { min-width:0; }
     .content { min-height:100vh; padding:16px clamp(10px,2vw,28px) 76px; display:flex; flex-direction:column; justify-content:flex-start; }
-    .title-wrap { height:40px; flex:none; text-align:center; margin:0 0 18px; }
+    .title-wrap { height:40px; flex:none; text-align:center; margin:0 0 32px; }
     .title { height:100%; display:flex; align-items:center; justify-content:center; gap:14px; margin:0; font-weight:400; }
     .title span { font-size:clamp(20px,3.1vw,32px); letter-spacing:6px; font-weight:300; }
     .tesla { width:140px; height:26px; object-fit:contain; filter:brightness(0) invert(1); }
@@ -68,8 +68,8 @@
     }
     @media (min-width:1000px) and (min-height:360px) {
       /* Preserve 16:9 artwork and fit four rows above the fullscreen button.
-         150px = top padding + header + header gap + bottom control space. */
-      .grid { max-width:min(1480px,calc((100vh - 150px - 3 * var(--tile-gap)) * 16 / 9 + 3 * var(--tile-gap))); }
+         164px = top padding + header + header gap + bottom control space. */
+      .grid { max-width:min(1480px,calc((100vh - 164px - 3 * var(--tile-gap)) * 16 / 9 + 3 * var(--tile-gap))); }
     }
     @media (max-width:700px) {
       .title { gap:10px; }
